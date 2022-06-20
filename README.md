@@ -19,6 +19,7 @@ e.g. Take a system of 2 polymer of 3 monomers each than the input file is as fol
 Simulation: 
 
 1) The length of the simulation and the time separation to save the frame are contained respectively in the variable MC_steps and stride.
+2) The root folder to store the frames and all the data is DIR_MASTER. Specific folder in which each trajectory will be saved is DIR. 
 
 
 
