@@ -17,7 +17,7 @@ extern std::map<std::pair<int,int>,double> neigh_angles;
 extern std::map<std::vector<int>,int> MC_move_n;
 extern double bending_rigidity;
 
-void MC_routine_real_ring(int polymer_length, int number_of_polymers,
+void MC_routine_real_ring(std::string DIR_MASTER,int polymer_length, int number_of_polymers,
 	double monomer_density,std::vector<int> start_traj_vec, long long int MC_steps, int stride,int start_run,int number_of_runs){
 	
 	std::string density;
@@ -29,22 +29,14 @@ void MC_routine_real_ring(int polymer_length, int number_of_polymers,
 	else{
 		density= std::to_string(int(monomer_density*100));
 	}
-
-	std::string DIR_MASTER = "/net/sbp/sbpstore1/mubertin/DATA_CUBIC/RINGS/Real_"+density+"_"
-	+std::to_string(int(bending_rigidity))+"_"+std::to_string(polymer_length);
-	//std::string DIR_MASTER = "DATA";
-	std::cout<<DIR_MASTER<<std::endl;
 	
 	std::vector<MC_move> mc_move=initialize_MC_move();
 
 	for(auto run=start_run;run<start_run+number_of_runs;run++){
+
+		std::string DIR = DIR_MASTER+"/"+std::to_string(run)+"/";
 		
 		int start_traj=start_traj_vec[run-start_run];
-		
-		std::string DIR = DIR_MASTER+"/"+std::to_string(run)+"/";
-		std::cout<<DIR<<std::endl;
-		std::string command = "mkdir -p "+DIR;
-		system(command.c_str());
 		
 		std::vector<polymer> melt;
 		
@@ -119,7 +111,6 @@ void MC_routine_real_ring(int polymer_length, int number_of_polymers,
 				polymer_tmp.chain[polymer_length-1].stored_length_right=1;
 			}
 			
-			//E+=compute_bending_energy(polymer_tmp);
 			melt.push_back(polymer_tmp);
 		}
 
@@ -177,7 +168,7 @@ void MC_routine_real_ring(int polymer_length, int number_of_polymers,
 		long long int acc = 0;
 		int N_file_to_write=MC_steps/stride;
 		
-		t.start();
+		std::cout<<"CIAO"<<std::endl;
 
 		for(int j=1;j<N_file_to_write;j++){ //loop over the N configurations to print
 			for(int n_step=0;n_step<stride;n_step++){ //loop over the time between the printed configurations
@@ -231,7 +222,6 @@ void MC_routine_real_ring(int polymer_length, int number_of_polymers,
 			traj.close();
 			R_CM.close();
 		}
-		std::cout<<t.stop()<<std::endl;
 		
 		double temp=0;
 		for(auto i=0;i<Lattice_size;i++){

@@ -181,7 +181,7 @@ void Initial_Condition_Ring(int polymer_length,int number_of_polymers){
 				v= rand() % Lattice_size;
 			}
 
-			std::cout<<number_of_created_polymer<<"\t"<<lattice[t][u][v]<<"\t"<<(t+u+v)%2<<"\t"<<t<<"\t"<<u<<"\t"<<v<<std::endl;
+			//std::cout<<number_of_created_polymer<<"\t"<<lattice[t][u][v]<<"\t"<<(t+u+v)%2<<"\t"<<t<<"\t"<<u<<"\t"<<v<<std::endl;
 			
 			monomer monomer_tmp{t,u,v};
 			polymer_tmp.chain.push_back(monomer_tmp);
@@ -262,7 +262,7 @@ void Initial_Condition_Ring(int polymer_length,int number_of_polymers){
 		}
 		
 		if(condition){
-			std::string name_file = "../ICS_RINGS/IC_RING_"+length+"_"+std::to_string(polymer_length);
+			std::string name_file = "IC_RING_"+length+"_"+std::to_string(polymer_length);
 			std::cout<<name_file<<std::endl;
 			std::ofstream traj;
 			traj.open(name_file);
